@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('role')->nullable(false);
+            $table->string('role')->default(RoleEnum::StockManager->value);
             $table->string('username')->nullable();
             $table->string('avatar')->default('/uploads/avatar.png');
             $table->timestamp('email_verified_at')->nullable();
