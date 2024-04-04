@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,15 +26,22 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-        
-        if($request->user()->role ==='admin') {
-            return redirect()->intended(RouteServiceProvider::ADMIN);
+        try {
+            //code...
+            $request->authenticate();
+    
+            $request->session()->regenerate();
+            
+            if($request->user()->role ==='admin') {
+                return redirect()->intended(RouteServiceProvider::ADMIN);
+            }
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } catch (ValidationException  $e) {
+            toastr()->error($e->getMessage());
+        }catch (\Exception $e){
+            toastr()->error('An unexpected error occurred. Please try again.');
         }
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return back()->withInput($request->only('email', 'remember'));
     }
 
     /**
@@ -46,7 +54,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
+        
         return redirect('/');
     }
 }
