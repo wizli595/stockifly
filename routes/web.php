@@ -19,8 +19,16 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    
+    // Replace this with your actual data retrieval logic
+    $data = [
+        'labels' => ['January', 'February', 'March', 'April', 'May' , 'April', 'May'],
+        'data' => [65, 59, 180, 81, 56 , 100 , 56],
+    ];
+    return view('dashboard',['data'=>$data]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
