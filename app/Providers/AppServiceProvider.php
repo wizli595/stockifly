@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+// use PowerComponents\LivewirePowerGrid\Rules\{Rule, Action};
+// use PowerComponents\LivewirePowerGrid\PowerGridServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // $this->app->register(PowerGridServiceProvider::class);
     }
 
     /**

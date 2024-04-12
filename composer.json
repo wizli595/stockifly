@@ -12,7 +12,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
-        "power-components/livewire-powergrid": "^5.4",
+        "power-components/livewire-powergrid": "*",
         "spatie/laravel-permission": "^6.4",
         "yoeunes/toastr": "^2.3"
     },

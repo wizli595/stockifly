@@ -13,8 +13,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        
             <livewire:user-table/>
-        </div>
     </div>
 </x-app-layout>
