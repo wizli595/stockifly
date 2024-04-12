@@ -30,6 +30,12 @@ Route::middleware('auth')->group(function () {
 
 // useless routes
 // Just to demo sidebar dropdown links active states.
+// great job
+// /////////////////////////////
+//
+// TO-DO : Add route accroding to anas's pdf
+//
+// /////////////////////////// 
 Route::get('/buttons/text', function () {
     return view('buttons-showcase.text');
 })->middleware(['auth'])->name('buttons.text');
