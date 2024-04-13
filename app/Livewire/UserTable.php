@@ -35,7 +35,8 @@ final class UserTable extends PowerGridComponent
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
-            Responsive::make()
+            Responsive::make(),
+            // Filter::mak()->label('Filter')->placeholder('Filter by name or email'),
         ];
     }
 
@@ -93,7 +94,9 @@ final class UserTable extends PowerGridComponent
 
     public function filters(): array
     {
-        return [];
+        return [
+            // Filter::datepicker('created_at', 'Created at'),
+        ];
     }
 
     #[\Livewire\Attributes\On('edit')]
