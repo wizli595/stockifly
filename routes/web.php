@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     // Our resource routes
     Route::resource('roles', RoleController::class);
+    
     Route::resource('users', UserController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('suppliers', SupplierController::class);

@@ -15,10 +15,13 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['permission:brand-create'], ['only' => ['index', 'show']]);
+    }
 
     public function index(UsersDataTable $dataTable)
     {
-        $data = User::latest()->paginate(5);
+        // $data = User::latest()->paginate(5);
         // return view('users.index',compact('data'));
         return $dataTable->render("users.index");
     }

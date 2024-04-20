@@ -22,7 +22,16 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'users.action')
+        ->addColumn('action', function ($user) {
+            $editUrl = route('users.edit', $user->id);
+            $showUrl = route('users.show', $user->id);
+            if (!$user->can("brand-create")) {
+                return "<button class='btn btn-primary' type='button' data-bs-toggle='modal'
+                data-bs-target='#error-modal'> Add.Customer
+                    </button>
+                        <a href='{$showUrl}' class='btn btn-xs btn-success'>View</a>";
+                }
+        })
             ->setRowId('id');
     }
 
@@ -65,7 +74,7 @@ class UsersDataTable extends DataTable
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(100)
                   ->addClass('text-center'),
             Column::make('id'),
             Column::make('email'),
