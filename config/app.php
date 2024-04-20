@@ -185,8 +185,8 @@ return [
         /*
          * Package Service Providers...
          */
-        PowerComponents\LivewirePowerGrid\Providers\PowerGridServiceProvider::class,
-
+        // PowerComponents\LivewirePowerGrid\Providers\PowerGridServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         /*
          * Application Service Providers...
          */

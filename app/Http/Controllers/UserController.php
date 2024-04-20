@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -9,14 +10,17 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+
 
 class UserController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(UsersDataTable $dataTable)
     {
         $data = User::latest()->paginate(5);
-        return view('users.index',compact('data'));
+        // return view('users.index',compact('data'));
+        return $dataTable->render("users.index");
     }
 
     public function create()
@@ -90,5 +94,36 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
+    }
+    
+    // Role Controlling 
+    public function showChangeRolesPermissions(User $user){
+
+        $roles = Role::all(); // Get all roles
+        $permissions = Permission::all(); // Get all permissions
+
+        // Get the roles and permissions of the user
+        $userRoles = $user->roles->pluck('id')->toArray();
+        $userPermissions = $user->permissions->pluck('id')->toArray();
+
+        return view('users.change_roles_permissions', compact('user', 'roles', 'permissions', 'userRoles', 'userPermissions'));
+    }
+
+    public function updateRolesPermissions(Request $request,User $user)
+    {
+        // $user = User::find($id);
+        
+        // Validate the request
+        $this->validate($request, [
+            'roles' => 'required|array',
+            'permissions' => 'required|array',
+        ]);
+        
+        // Sync roles and permissions
+        $user->syncRoles($request->roles);
+        $user->syncPermissions($request->permissions);
+
+        return redirect()->route('users.index')
+                        ->with('success', 'Roles and permissions updated successfully');
     }
 }

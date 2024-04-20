@@ -38,6 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('suppliers', SupplierController::class);
+    Route::get('users/{user}/change_roles_permissions', [UserController::class, 'showChangeRolesPermissions'])->name('users.change_roles_permissions');
+    Route::post('users/{user}/update_roles_permissions', [UserController::class, 'updateRolesPermissions'])->name('users.update_roles_permissions');
 });
 
 require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
